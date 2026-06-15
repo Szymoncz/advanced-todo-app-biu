@@ -1,0 +1,1 @@
+import{_a as a}from"./chunk-NRZGBURY.js";var s=class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=a({type:e,selectors:[["app-task-detail"]],decls:0,vars:0,template:function(t,i){},encapsulation:2})};export{s as TaskDetail};
