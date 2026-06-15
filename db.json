@@ -1,0 +1,70 @@
+{
+  "tasks": [
+     {
+    "id": "1",
+    "title": "Zaprojektować UI aplikacji",
+    "description": "Przygotować makiety i schemat kolorów",
+    "notes": "Użyć Figmy",
+    "status": "in-progress",
+    "priority": "high",
+    "labels": [],
+    "projectId": "1",
+    "assignedTo": null,
+    "dueDate": "2025-06-20",
+    "recurrence": "none",
+    "progress": 60,
+    "attachments": [],
+    "createdAt": "2025-06-01T10:00:00.000Z",
+    "updatedAt": "2025-06-01T10:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "title": "Napisać serwis TaskService",
+    "description": "Implementacja CRUD z HttpClient i Signals",
+    "notes": "",
+    "status": "done",
+    "priority": "urgent",
+    "labels": [],
+    "projectId": "1",
+    "assignedTo": null,
+    "dueDate": "2025-06-14",
+    "recurrence": "none",
+    "progress": 100,
+    "attachments": [],
+    "createdAt": "2025-06-01T10:00:00.000Z",
+    "updatedAt": "2025-06-01T10:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "title": "Dodać routing i lazy loading",
+    "description": "Skonfigurować app.routes.ts z loadComponent",
+    "notes": "Pamiętać o --flat przy generowaniu",
+    "status": "todo",
+    "priority": "medium",
+    "labels": [],
+    "projectId": null,
+    "assignedTo": null,
+    "dueDate": "2025-06-25",
+    "recurrence": "none",
+    "progress": 0,
+    "attachments": [],
+    "createdAt": "2025-06-01T10:00:00.000Z",
+    "updatedAt": "2025-06-01T10:00:00.000Z"
+  }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "name": "Projekt domowy",
+      "color": "#6366f1"
+    }
+  ],
+  "labels": [
+    {
+      "id": "1",
+      "name": "Ważne",
+      "color": "#ef4444"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
