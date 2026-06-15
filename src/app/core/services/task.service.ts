@@ -2,13 +2,15 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Task, Priority, TaskStatus } from '../models/task.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class TaskService {
-    private readonly API = 'http://localhost:3000';
+   
+private readonly API = environment.apiUrl;
 
     private _tasks = signal<Task[]>([]);
     private _loading = signal<boolean>(false);
