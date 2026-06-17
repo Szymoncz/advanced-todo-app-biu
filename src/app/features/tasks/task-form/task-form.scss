@@ -4,6 +4,11 @@ mat-dialog-content {
   gap: 8px;
   min-width: 500px;
   padding-top: 16px !important;
+
+  @media (max-width: 600px) {
+    min-width: unset;
+    width: 100%;
+  }
 }
 
 .full-width {
@@ -14,6 +19,10 @@ mat-dialog-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .progress-section {

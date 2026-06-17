@@ -15,6 +15,11 @@
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
 }
 
 .stat-card {
@@ -70,5 +75,17 @@
     max-height: 300px;
     display: flex;
     justify-content: center;
+    position: relative;
+
+    canvas {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    mat-card-content {
+      max-height: 250px;
+      padding: 8px;
+    }
   }
 }

@@ -61,12 +61,10 @@ export class TaskList {
 
   private dialog = inject(MatDialog);
   
-
-
-
   openForm() {
     const ref = this.dialog.open(TaskForm, {
-      width: '600px'
+      width: '600px',
+    maxWidth: '95vw'
     });
 
     ref.afterClosed().subscribe(result => {
@@ -84,7 +82,8 @@ export class TaskList {
 
   editTask(task: Task) {
     const ref = this.dialog.open(TaskForm, {
-      width: '600px',
+       width: '600px',
+    maxWidth: '95vw',
       data: task
     });
 
