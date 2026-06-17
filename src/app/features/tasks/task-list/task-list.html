@@ -37,6 +37,12 @@
       <mat-icon>download</mat-icon>
       Eksport CSV
     </button>
+
+    <button mat-stroked-button (click)="triggerImport()">
+      <mat-icon>upload</mat-icon>
+      Import CSV
+    </button>
+    <input #fileInput type="file" accept=".csv" (change)="importFromCSV($event)" hidden>
   </div>
 
   @if (taskService.loading()) {
