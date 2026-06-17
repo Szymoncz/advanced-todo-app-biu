@@ -12,6 +12,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TaskService } from '../../../core/services/task.service';
 import { Task, TaskStatus } from '../../../core/models/task.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskForm } from '../task-form/task-form';
 
 @Component({
   selector: 'app-task-list',
@@ -56,12 +58,37 @@ export class TaskList {
     return labels[status];
   }
 
+  private dialog = inject(MatDialog);
+
   openForm() {
-    // TODO: otworzymy dialog z formularzem
+    const ref = this.dialog.open(TaskForm, {
+      width: '600px'
+    });
+
+    ref.afterClosed().subscribe(result => {
+      if (result) {
+        this.taskService.addTask({
+          ...result,
+          labels: [],
+          projectId: null,
+          assignedTo: null,
+          attachmnents: []
+        }).subscribe();
+      }
+    });
   }
 
   editTask(task: Task) {
-    // TODO: otworzymy dialog z wypełnionym formularzem
+    const ref = this.dialog.open(TaskForm, {
+      width: '600px',
+      data: task
+    });
+
+    ref.afterClosed().subscribe(result => {
+      if (result) {
+        this.taskService.updateTask(task.id, result).subscribe();
+      }
+    });
   }
 
   deleteTask(id: string) {

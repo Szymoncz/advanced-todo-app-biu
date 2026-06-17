@@ -1,0 +1,28 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 500px;
+  padding-top: 16px !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.progress-section {
+  padding: 8px 0;
+
+  label {
+    font-size: 14px;
+    color: #666;
+    display: block;
+    margin-bottom: 4px;
+  }
+}

@@ -40,17 +40,18 @@ export class TaskForm {
     status: [this.data.status ?? 'todo'],
     priority: [this.data.priority ?? 'medium'],
     dueDate: [this.data.dueDate ?? null],
-    progress: [this.data.recurrence ?? 'none'],
+    progress: [this.data.progress ?? 0],
+    recurrence: [this.data.recurrence ?? 'none'],
   });
 
   get isEdit(): boolean {
     return !!this.data.id;
   }
 
-  get titleerror(): string {
+  get titleError(): string {
     const ctrl = this.form.get('title');
     if (ctrl?.hasError('required')) return 'Tytuł jest wymagany';
-    if (ctrl?.hasError('minLength')) return 'Wymagane są minimum 3 znaki';
+    if (ctrl?.hasError('minlength')) return 'Wymagane są minimum 3 znaki';
     return '';
   }
 
@@ -59,6 +60,10 @@ export class TaskForm {
       this.form.markAllAsTouched();
       return;
     }
+    this.dialogRef.close(this.form.value);
+  }
+
+  cancel() {
     this.dialogRef.close();
   }
 
