@@ -1,1 +1,73 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h2 class="dashboard-title">Dashboard</h2>
+
+  <div class="stats-grid">
+    <mat-card class="stat-card total">
+      <mat-card-content>
+        <mat-icon>task</mat-icon>
+        <div class="stat-info">
+          <span class="stat-value">{{ totalTasks() }}</span>
+          <span class="stat-label">Wszystkie zadania</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card done">
+      <mat-card-content>
+        <mat-icon>check_circle</mat-icon>
+        <div class="stat-info">
+          <span class="stat-value">{{ doneTasks() }}</span>
+          <span class="stat-label">Ukończone</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card progress">
+      <mat-card-content>
+        <mat-icon>pending</mat-icon>
+        <div class="stat-info">
+          <span class="stat-value">{{ inProgressTasks() }}</span>
+          <span class="stat-label">W trakcie</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card overdue">
+      <mat-card-content>
+        <mat-icon>warning</mat-icon>
+        <div class="stat-info">
+          <span class="stat-value">{{ overdueTasks() }}</span>
+          <span class="stat-label">Przeterminowane</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="charts-grid">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Status zadań</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas baseChart
+          [data]="statusChartData()"
+          [options]="chartOptions"
+          [type]="'doughnut'">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Zadania według priorytetu</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas baseChart
+          [data]="priorityChartData()"
+          [options]="barChartOptions"
+          [type]="'bar'">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
