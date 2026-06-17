@@ -76,7 +76,7 @@ private readonly API = environment.apiUrl;
 
         updateTask(id: string, changes: Partial<Task>) {
             const updated = { ...changes, updatedAt: new Date().toISOString() };
-            return this.http.patch<Task>(`${this.API}/tasks/${id}`, updated).pipe(tap(task => this._tasks.update(tasks => tasks.map(t => t.id === id ? task : t)
+            return this.http.put<Task>(`${this.API}/tasks/${id}`, updated).pipe(tap(task => this._tasks.update(tasks => tasks.map(t => t.id === id ? task : t)
         ))
             );    
     }
