@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -14,6 +14,7 @@ import { TaskService } from '../../../core/services/task.service';
 import { Task, TaskStatus } from '../../../core/models/task.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskForm } from '../task-form/task-form';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-list',
@@ -59,6 +60,9 @@ export class TaskList {
   }
 
   private dialog = inject(MatDialog);
+  
+
+
 
   openForm() {
     const ref = this.dialog.open(TaskForm, {
@@ -95,6 +99,28 @@ export class TaskList {
     this.taskService.deleteTask(id).subscribe();
   }
 
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  triggerImport() {
+    this.fileInput.nativeElement.click();
+  }
+
+  importFromCSV(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target?.result as string;
+      this.parseAndImport(text);
+    };
+    reader.readAsText(file);
+    input.value = '';
+  }
+
+
+
   exportToCSV() {
     const tasks = this.taskService.filteredTasks();
     const headers = ['ID', 'Tytuł', 'Opis', 'Status', 'Priorytet', 'Termin', 'Postęp', 'Powtarzalność'];
@@ -117,5 +143,73 @@ export class TaskList {
     a.download = `tasks-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  private snackBar = inject(MatSnackBar);
+
+  private parseAndImport(csvText: string) {
+    const lines = csvText.trim().split('\n');
+    const dataLines = lines.slice(1);
+    const existingTitles = new Set(this.taskService.tasks().map(t => t.title.toLowerCase()));
+
+    let added = 0;
+    let skipped = 0;
+
+    dataLines.forEach(line => {
+      const values = this.parseCSVLine(line);
+      if (values.length < 8) return;
+
+      const [, title, description, status, priority, dueDate, progress, recurrence] = values;
+      
+      if (existingTitles.has(title.toLowerCase())) {
+        skipped++;
+        return;
+      }
+
+      existingTitles.add(title.toLowerCase());
+      added++;
+
+      this.taskService.addTask({
+        title,
+        description,
+        notes: '',
+        status: status as any,
+        priority: priority as any,
+        labels: [],
+        projectId: null,
+        assignedTo: null,
+        dueDate: dueDate || null,
+        recurrence: recurrence as any,
+        progress: Number(progress) || 0,
+        attachments: []
+      }).subscribe();
+    });
+
+    this.snackBar.open(
+      `Zaimportowano ${added} zadań, pominięto ${skipped} z powodu duplikatów`,
+      'OK',
+      { duration: 4000 }
+    )
+  }
+
+  private parseCSVLine(line: string): string [] {
+    const result: string[] = [];
+    let current = '';
+    let insideQuotes = false;
+  
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+  
+      if (char === '"') {
+        insideQuotes = !insideQuotes;
+      } else if (char === ',' && !insideQuotes) {
+        result.push(current);
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    result.push(current.trim());
+    return result;
   }
 }
