@@ -13,6 +13,10 @@
 
 .main-content {
   padding: 24px;
+
+@media (max-width: 600px) {
+    padding: 12px;
+  }
 }
 
 .active-link {
