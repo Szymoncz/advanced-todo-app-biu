@@ -94,4 +94,28 @@ export class TaskList {
   deleteTask(id: string) {
     this.taskService.deleteTask(id).subscribe();
   }
+
+  exportToCSV() {
+    const tasks = this.taskService.filteredTasks();
+    const headers = ['ID', 'Tytuł', 'Opis', 'Status', 'Priorytet', 'Termin', 'Postęp', 'Powtarzalność'];
+    const rows = tasks.map(t => [
+      t.id,
+      `"${t.title.replace(/"/g, '""')}"`,
+      `"${t.description.replace(/"/g, '""')}"`,
+      t.status,
+      t.priority,
+      t.dueDate ?? '',
+      t.progress,
+      t.recurrence
+    ]);
+
+    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tasks-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 }

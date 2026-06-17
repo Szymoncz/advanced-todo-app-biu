@@ -32,6 +32,11 @@
       <mat-icon>add</mat-icon>
       Nowe zadanie
     </button>
+
+    <button mat-stroked-button (click)="exportToCSV()">
+      <mat-icon>download</mat-icon>
+      Eksport CSV
+    </button>
   </div>
 
   @if (taskService.loading()) {
