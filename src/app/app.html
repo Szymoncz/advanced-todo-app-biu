@@ -24,7 +24,7 @@
       </div>
     } @else {
       @for (task of taskService.notifications(); track task.id) {
-        <button mat-menu-item (click)="goToTask(task)">
+        <button mat-menu-item (click)="goToTask(task)" [class.read]="isRead(task.id)">
           <mat-icon [color]="taskService.isOverdue(task) ? 'warn' : 'primary'">
             {{ taskService.isOverdue(task) ? 'error' : 'schedule' }}
           </mat-icon>

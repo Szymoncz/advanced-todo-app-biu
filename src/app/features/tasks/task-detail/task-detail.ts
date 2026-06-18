@@ -9,6 +9,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from '../../../core/services/task.service';
 import { TaskForm } from '../task-form/task-form';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-task-detail',
@@ -30,7 +34,10 @@ export class TaskDetail {
   private dialog = inject(MatDialog);
   taskService = inject(TaskService);
 
-  taskId = signal<string>(this.route.snapshot.params['id']);
+  taskId = toSignal(this.route.params.pipe(map(p => p['id'])),
+    { initialValue: this.route.snapshot.params['id'] }
+  );
+
   task = computed(() => this.taskService.tasks().find(t => t.id === this.taskId()));
   
   statusLabel(status: string): string {

@@ -39,8 +39,15 @@ sidenavOpened = signal(true);
     this.sidenavOpened.update(v => !v);
   }
 
+  readNotifications = signal<Set<string>>(new Set());
+
   goToTask(task: Task) {
+    this.readNotifications.update(set => new Set([...set, task.id]))
     this.router.navigate(['/tasks', task.id]);
+  }
+
+  isRead(taskId: string): boolean {
+    return this.readNotifications().has(taskId);
   }
 
 }
