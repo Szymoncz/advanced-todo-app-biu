@@ -99,4 +99,8 @@ private readonly API = environment.apiUrl;
     setFilterStatus(status: TaskStatus | 'all') {
         this._filterStatus.set(status);
     }
+
+    getTaskById(id: string) {
+        return computed(() => this._tasks().find(t => t.id ===id));
+    }
 }

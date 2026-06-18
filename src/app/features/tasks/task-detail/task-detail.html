@@ -1,0 +1,91 @@
+@if (task(); as t) {
+  <div class="task-detail-container">
+    <button mat-button (click)="goBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      Wróć do listy
+    </button>
+
+    <mat-card class="detail-card" [class]="'priority-' + t.priority">
+      <mat-card-header>
+        <mat-card-title>{{ t.title }}</mat-card-title>
+        <mat-card-subtitle>
+          <mat-chip>{{ statusLabel(t.status) }}</mat-chip>
+          <span class="priority-label">{{ priorityLabel(t.priority) }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <section class="detail-section">
+          <h3>Opis</h3>
+          <p>{{ t.description || 'Brak opisu' }}</p>
+        </section>
+
+        @if (t.notes) {
+          <section class="detail-section">
+            <h3>Notatki</h3>
+            <p>{{ t.notes }}</p>
+          </section>
+        }
+
+        <section class="detail-section">
+          <h3>Postęp</h3>
+          <mat-progress-bar mode="determinate" [value]="t.progress"></mat-progress-bar>
+          <span class="progress-label">{{ t.progress }}%</span>
+        </section>
+
+        <div class="detail-grid">
+          @if (t.dueDate) {
+            <div class="detail-item">
+              <mat-icon>calendar_today</mat-icon>
+              <div>
+                <span class="detail-label">Termin</span>
+                <span class="detail-value">{{ t.dueDate | date:'dd MMMM yyyy' }}</span>
+              </div>
+            </div>
+          }
+
+          <div class="detail-item">
+            <mat-icon>repeat</mat-icon>
+            <div>
+              <span class="detail-label">Powtarzalność</span>
+              <span class="detail-value">{{ recurrenceLabel(t.recurrence) }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon>schedule</mat-icon>
+            <div>
+              <span class="detail-label">Utworzono</span>
+              <span class="detail-value">{{ t.createdAt | date:'dd MMM yyyy, HH:mm' }}</span>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <mat-icon>update</mat-icon>
+            <div>
+              <span class="detail-label">Zaktualizowano</span>
+              <span class="detail-value">{{ t.updatedAt | date:'dd MMM yyyy, HH:mm' }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-button color="warn" (click)="deleteTask()">
+          <mat-icon>delete</mat-icon>
+          Usuń
+        </button>
+        <button mat-flat-button color="primary" (click)="editTask()">
+          <mat-icon>edit</mat-icon>
+          Edytuj
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+} @else {
+  <div class="not-found">
+    <mat-icon>error_outline</mat-icon>
+    <p>Zadanie nie zostało znalezione</p>
+    <button mat-button (click)="goBack()">Wróć do listy</button>
+  </div>
+}
