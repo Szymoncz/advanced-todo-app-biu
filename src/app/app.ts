@@ -19,8 +19,11 @@ export class App {
   protected readonly title = signal('advanced-todo-app');
 
   private breakpointObserver = inject(BreakpointObserver);
-  isMobile = toSignal(this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(result => result.matches)),
-    { initialValue: false }
+  isMobile = toSignal(
+  this.breakpointObserver.observe('(max-width: 768px)').pipe(
+    map(result => result.matches)
+  ),
+  { initialValue: false }
 );
 
 sidenavOpened = signal(true);
