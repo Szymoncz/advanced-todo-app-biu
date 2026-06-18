@@ -103,4 +103,30 @@ private readonly API = environment.apiUrl;
     getTaskById(id: string) {
         return computed(() => this._tasks().find(t => t.id ===id));
     }
+
+   readonly notifications = computed(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const threeDaysFromNow = new Date(today);
+    threeDaysFromNow.setDate(today.getDate() + 3);
+
+    return this._tasks().filter(task => {
+        if (!task.dueDate || task.status === 'done') return false;
+        const due = new Date(task.dueDate);
+        due.setHours(0, 0, 0, 0);
+        return due <= threeDaysFromNow;
+    }).sort((a, b) => 
+        (a.dueDate ?? '').localeCompare(b.dueDate ?? '')
+    );
+});
+
+readonly notificationCount = computed(() => this.notifications().length);
+
+isOverdue(task: Task): boolean {
+    if (!task.dueDate) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return new Date(task.dueDate) < today;
+}
+
 }
