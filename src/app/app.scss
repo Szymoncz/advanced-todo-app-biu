@@ -13,8 +13,11 @@
 
 .main-content {
   padding: 24px;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 
-@media (max-width: 600px) {
+  @media (max-width: 600px) {
     padding: 12px;
   }
 }
