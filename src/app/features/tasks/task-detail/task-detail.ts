@@ -1,5 +1,5 @@
-import { Component, inject, computed, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, inject, computed } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,13 +11,10 @@ import { TaskService } from '../../../core/services/task.service';
 import { TaskForm } from '../task-form/task-form';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-task-detail',
   imports: [
-    RouterLink,
     DatePipe,
     MatCardModule,
     MatButtonModule,
