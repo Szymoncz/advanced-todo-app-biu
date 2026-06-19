@@ -1,59 +1,49 @@
-# AdvancedTodoApp
+# Advanced Todo App — BIU Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.14.
+Zaawansowana aplikacja Todo zbudowana w **Angular 19** jako projekt zaliczeniowy przedmiotu "Bogate Interfejsy Użytkownika".
 
-## Development server
+🚀 **Demo:** [szymoncz.github.io/advanced-todo-app-biu](https://szymoncz.github.io/advanced-todo-app-biu/)
 
-To start a local development server, run:
+## Mapowanie wymagań React → Angular
 
-```bash
-ng serve
-```
+| Wymaganie (React) | Implementacja (Angular 19) |
+|---|---|
+| `useState` | `signal()` |
+| `useMemo` | `computed()` |
+| `useContext` / Context API | `Injectable` serwis + `inject()` |
+| Custom hooks | Serwisy (`@Injectable`) |
+| React Router | `@angular/router` z lazy loading |
+| `fetch` / axios | `HttpClient` |
+| Formik / React Hook Form | `ReactiveFormsModule` |
+| `React.lazy` + `Suspense` | `loadComponent` + `@defer` |
+| Redux / NgRx | Signals + computed() |
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Funkcjonalności
 
-## Code scaffolding
+- ✅ CRUD zadań (dodawanie, edycja, usuwanie)
+- ✅ System priorytetów z oznaczeniem wizualnym
+- ✅ Wyszukiwanie i filtrowanie (status, priorytet, użytkownik)
+- ✅ Przypisywanie zadań do użytkowników
+- ✅ Dashboard z wykresami (Chart.js)
+- ✅ System powiadomień z badge
+- ✅ Import/Export CSV z deduplikacją
+- ✅ Responsywność (RWD) z hamburger menu
+- ✅ CI/CD — GitHub Actions → GitHub Pages
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Stack techniczny
 
-```bash
-ng generate component component-name
-```
+- Angular 19 (standalone components)
+- Angular Material (Material Design 3)
+- Signals + computed() (state management)
+- RxJS (HttpClient, BreakpointObserver)
+- Chart.js + ng2-charts
+- MockAPI.io (mock backend)
+- GitHub Actions (CI/CD)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Uruchomienie lokalnie
 
 ```bash
-ng e2e
+npm install
+npm run api    # uruchamia JSON Server na localhost:3000
+ng serve       # uruchamia aplikację na localhost:4200
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
