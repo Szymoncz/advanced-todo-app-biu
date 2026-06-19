@@ -15,6 +15,7 @@ import { Task, TaskStatus } from '../../../core/models/task.model';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskForm } from '../task-form/task-form';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-task-list',
@@ -211,4 +212,14 @@ export class TaskList {
     result.push(current.trim());
     return result;
   }
+
+  userService = inject(UserService);
+
+getUserName(id: string): string {
+  return this.userService.getUserById(id)?.name ?? 'Nieznany';
+}
+
+getUserAvatar(id: string): string {
+  return this.userService.getUserById(id)?.avatar ?? '?';
+}
 }
