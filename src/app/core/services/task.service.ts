@@ -23,6 +23,7 @@ private readonly API = environment.apiUrl;
         const query = this._searchQuery().toLowerCase();
         const priority = this._filterPriority();
         const status = this._filterStatus();
+        const user = this._filterUser();
 
         if (query) {
             tasks = tasks.filter(task =>
@@ -38,6 +39,10 @@ private readonly API = environment.apiUrl;
 
         if (status !== 'all') {
             tasks = tasks.filter(task => task.status === status);
+        }
+
+        if (user !== 'all') {
+            tasks = tasks.filter(task => task.assignedTo === user);
         }
 
         return tasks;
