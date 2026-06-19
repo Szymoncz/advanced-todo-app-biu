@@ -23,14 +23,15 @@ export const routes: Routes = [
         .then(m => m.TaskDetail)
     },
    {
-    path: '**',
-    redirectTo: 'dashboard'
-   },
-
-   {
   path: 'users',
   loadComponent: () =>
     import('./features/users')
       .then(m => m.Users)
-}
+},
+
+  {
+    path: '**',
+    redirectTo: 'dashboard'
+   }
+
 ];
