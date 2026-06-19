@@ -55,21 +55,20 @@
     <div class="tasks-grid">
       @for (task of taskService.filteredTasks(); track task.id) {
         <mat-card class="task-card" [class]="'priority-' + task.priority">
-         <mat-card-header>
-  <mat-card-title class="card-title-row">
-    <span>{{ task.title }}</span>
-    @if (task.assignedTo) {
-      <span class="avatar" [title]="getUserName(task.assignedTo)">
-        {{ getUserAvatar(task.assignedTo) }}
-      </span>
-    }
-  </mat-card-title>
+        <mat-card-header>
+  <mat-card-title>{{ task.title }}</mat-card-title>
   <mat-card-subtitle>
     <mat-chip [class]="'status-' + task.status">
       {{ statusLabel(task.status) }}
     </mat-chip>
   </mat-card-subtitle>
 </mat-card-header>
+
+@if (task.assignedTo) {
+  <span class="avatar" [title]="getUserName(task.assignedTo)">
+    {{ getUserAvatar(task.assignedTo) }}
+  </span>
+}
 
           <mat-card-content>
             <p class="task-description">{{ task.description }}</p>
