@@ -11,6 +11,7 @@ import { TaskService } from '../../../core/services/task.service';
 import { TaskForm } from '../task-form/task-form';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -96,5 +97,11 @@ export class TaskDetail {
   goBack() {
     this.router.navigate(['/tasks']);
   }
+
+  userService = inject(UserService);
+
+getUserName(id: string): string {
+  return this.userService.getUserById(id)?.name ?? 'Nieznany';
+}
 
 }
