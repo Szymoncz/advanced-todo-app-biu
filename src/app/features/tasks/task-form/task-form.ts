@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { Task } from '../../../core/models/task.model';
+import { UserService } from '../../../core/services/user.service'
 
 @Component({
   selector: 'app-task-form',
@@ -33,6 +34,8 @@ export class TaskForm {
   private dialogRef = inject(MatDialogRef<TaskForm>);
   data: Partial<Task> = inject(MAT_DIALOG_DATA, { optional: true }) ?? {};
 
+  userService = inject(UserService);
+
   form = this.fb.group({
     title: [this.data.title ?? '', [Validators.required, Validators.minLength(3)]],
     description: [this.data.description ?? ''],
@@ -42,6 +45,7 @@ export class TaskForm {
     dueDate: [this.data.dueDate ?? null],
     progress: [this.data.progress ?? 0],
     recurrence: [this.data.recurrence ?? 'none'],
+    assignedTo: [this.data.assignedTo ?? null]
   });
 
   get isEdit(): boolean {

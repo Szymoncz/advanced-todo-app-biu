@@ -31,3 +31,10 @@ export interface Project {
     name: string;
     color: string;
 }
+
+export interface AppUser {
+    id: string;
+    name: string;
+    avatar: string;
+    role: 'admin'|'member';
+}

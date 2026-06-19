@@ -63,6 +63,21 @@
     </mat-form-field>
   </div>
 
+  <mat-form-field appearance="outline" class="full-width">
+  <mat-label>Przypisz do</mat-label>
+  <mat-select formControlName="assignedTo">
+    <mat-option [value]="null">Nieprzypisane</mat-option>
+    @for (user of userService.users(); track user.id) {
+      <mat-option [value]="user.id">
+        <span class="user-option">
+          <span class="avatar-small">{{ user.avatar }}</span>
+          {{ user.name }}
+        </span>
+      </mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
   <div class="progress-section">
     <label>Postęp: {{ form.get('progress')?.value }}%</label>
     <mat-slider min="0" max="100" step="5" class="full-width">
