@@ -222,4 +222,8 @@ getUserName(id: string): string {
 getUserAvatar(id: string): string {
   return this.userService.getUserById(id)?.avatar ?? '?';
 }
+
+onUserFilter(value: string) {
+  this.taskService.setFilterUser(value as any);
+}
 }

@@ -28,6 +28,16 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="outline">
+      <mat-label>Użytkownik</mat-label>
+      <mat-select (selectionChange)="onUserFilter($event.value)">
+        <mat-option value="all">Wszyscy</mat-option>
+        @for (user of userService.users(); track user.id) {
+          <mat-option [value]="user.id">{{ user.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
     <button mat-fab extended color="primary" (click)="openForm()">
       <mat-icon>add</mat-icon>
       Nowe zadanie
@@ -52,61 +62,71 @@
   }
 
   @if (!taskService.loading()) {
-    <div class="tasks-grid">
-      @for (task of taskService.filteredTasks(); track task.id) {
-        <mat-card class="task-card" [class]="'priority-' + task.priority">
-        <mat-card-header>
-  <mat-card-title>{{ task.title }}</mat-card-title>
-  <mat-card-subtitle>
-    <mat-chip [class]="'status-' + task.status">
-      {{ statusLabel(task.status) }}
-    </mat-chip>
-  </mat-card-subtitle>
-</mat-card-header>
+    @defer (on viewport) {
+      <div class="tasks-grid">
+        @for (task of taskService.filteredTasks(); track task.id) {
+          <mat-card class="task-card" [class]="'priority-' + task.priority">
+            <mat-card-header>
+              <mat-card-title>{{ task.title }}</mat-card-title>
+              <mat-card-subtitle>
+                <mat-chip [class]="'status-' + task.status">
+                  {{ statusLabel(task.status) }}
+                </mat-chip>
+              </mat-card-subtitle>
+            </mat-card-header>
 
-@if (task.assignedTo) {
-  <span class="avatar" [title]="getUserName(task.assignedTo)">
-    {{ getUserAvatar(task.assignedTo) }}
-  </span>
-}
-
-          <mat-card-content>
-            <p class="task-description">{{ task.description }}</p>
-
-            @if (task.dueDate) {
-              <p class="due-date">
-                <mat-icon>calendar_today</mat-icon>
-                {{ task.dueDate | date:'dd MMM yyyy' }}
-              </p>
+            @if (task.assignedTo) {
+              <span class="avatar" [title]="getUserName(task.assignedTo)">
+                {{ getUserAvatar(task.assignedTo) }}
+              </span>
             }
 
-            <mat-progress-bar 
-              mode="determinate" 
-              [value]="task.progress"
-              class="progress-bar">
-            </mat-progress-bar>
-            <span class="progress-label">{{ task.progress }}%</span>
-          </mat-card-content>
+            <mat-card-content>
+              <p class="task-description">{{ task.description }}</p>
 
-          <mat-card-actions>
-            <button mat-icon-button (click)="editTask(task)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button mat-icon-button [routerLink]="['/tasks', task.id]">
-              <mat-icon>visibility</mat-icon>
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      } @empty {
-        <div class="empty-state">
-          <mat-icon>inbox</mat-icon>
-          <p>Brak zadań. Dodaj pierwsze zadanie!</p>
-        </div>
-      }
-    </div>
+              @if (task.dueDate) {
+                <p class="due-date">
+                  <mat-icon>calendar_today</mat-icon>
+                  {{ task.dueDate | date:'dd MMM yyyy' }}
+                </p>
+              }
+
+              <mat-progress-bar 
+                mode="determinate" 
+                [value]="task.progress"
+                class="progress-bar">
+              </mat-progress-bar>
+              <span class="progress-label">{{ task.progress }}%</span>
+            </mat-card-content>
+
+            <mat-card-actions>
+              <button mat-icon-button (click)="editTask(task)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button [routerLink]="['/tasks', task.id]">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        } @empty {
+          <div class="empty-state">
+            <mat-icon>inbox</mat-icon>
+            <p>Brak zadań. Dodaj pierwsze zadanie!</p>
+          </div>
+        }
+      </div>
+    } @loading {
+      <div class="loading-container">
+        <mat-spinner />
+      </div>
+    } @placeholder {
+      <div class="loading-container">
+        <mat-spinner />
+      </div>
+    }
   }
 
 </div>
