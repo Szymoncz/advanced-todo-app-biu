@@ -1,0 +1,36 @@
+<div class="users-container">
+  <h2 class="users-title">Użytkownicy</h2>
+
+  <div class="users-grid">
+    @for (user of userService.users(); track user.id) {
+      <mat-card class="user-card" (click)="goToTasks(user.id)">
+        <mat-card-content>
+          <div class="user-header">
+            <span class="avatar-large">{{ user.avatar }}</span>
+            <div class="user-info">
+              <span class="user-name">{{ user.name }}</span>
+              <span class="user-role">{{ user.role === 'admin' ? '👑 Admin' : '👤 Member' }}</span>
+            </div>
+          </div>
+
+          <div class="user-stats">
+            <div class="stat">
+              <span class="stat-value">{{ getTaskCount(user.id) }}</span>
+              <span class="stat-label">Zadań</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">{{ getDoneCount(user.id) }}</span>
+              <span class="stat-label">Ukończonych</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">
+                {{ getTaskCount(user.id) > 0 ? ((getDoneCount(user.id) / getTaskCount(user.id)) * 100 | number:'1.0-0') : 0 }}%
+              </span>
+              <span class="stat-label">Postęp</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

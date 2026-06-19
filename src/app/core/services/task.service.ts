@@ -128,6 +128,12 @@ isOverdue(task: Task): boolean {
     today.setHours(0, 0, 0, 0);
     return new Date(task.dueDate) < today;
 }
+private _filterUser = signal<string | 'all'>('all');
+readonly filterUser = this._filterUser.asReadonly();
+
+setFilterUser(userId: string | 'all') {
+    this._filterUser.set(userId);
+}
 
 }
 

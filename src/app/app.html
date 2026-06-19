@@ -52,6 +52,11 @@
         <mat-icon matListItemIcon>task</mat-icon>
         <span matListItemTitle>Zadania</span>
       </a>
+      <a mat-list-item routerLink="/users" routerLinkActive="active-link"
+   (click)="isMobile() && toggleSidenav()">
+  <mat-icon matListItemIcon>group</mat-icon>
+  <span matListItemTitle>Użytkownicy</span>
+</a>
     </mat-nav-list>
   </mat-sidenav>
 
