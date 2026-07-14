@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { of, throwError } from 'rxjs';
 
 export interface LoginCredentials {
   email: string;
@@ -38,19 +39,42 @@ export class Auth {
   readonly isAdmin = computed(() => this._user()?.role === 'admin');
 
   login(credentials: LoginCredentials) {
-    return this.http.post<AuthResponse>(
-      `${environment.apiUrl}/auth/login`,
-      credentials
-    ).pipe(
-      tap(response => {
-        localStorage.setItem('auth_token', response.token);
-        localStorage.setItem('auth_user', JSON.stringify(response.user));
-        this._token.set(response.token);
-        this._user.set(response.user);
+  const mockUsers = [
+    { email: 'admin@todo.pl', password: 'admin123', name: 'Admin', role: 'admin' as const, id: '1'},
+    { email: 'anna@todo.pl', password: 'anna123', name: 'Anna Kowalska', role: 'member' as const, id: '2'},
+];
 
-        this.router.navigate(['/dahsboard']);
-      })
-    )
+  const user = mockUsers.find(
+    u => u.email === credentials.email && u.password === credentials.password
+  );
+
+  if (user) {
+    const mockToken = btoa(JSON.stringify({ id: user.id, email: user.email}));
+    localStorage.setItem('auth_token', mockToken);
+    localStorage.setItem('auth_user', JSON.stringify(user));
+    this._token.set(mockToken);
+    this._user.set(user);
+    this.router.navigate(['/dahsboard']);
+    return of({ token: mockToken, user});
+  }
+
+  return throwError (() => new Error('Nieprawidłowe dane logowania'))
+
+
+    //Real API for backend when ready - for now using mock above just for tests of login
+    // return this.http.post<AuthResponse>(
+    //   `${environment.apiUrl}/auth/login`,
+    //   credentials
+    // ).pipe(
+    //   tap(response => {
+    //     localStorage.setItem('auth_token', response.token);
+    //     localStorage.setItem('auth_user', JSON.stringify(response.user));
+    //     this._token.set(response.token);
+    //     this._user.set(response.user);
+
+    //     this.router.navigate(['/dahsboard']);
+    //   })
+    // )
   }
 
   logout() {
