@@ -1,3 +1,4 @@
+@if (authService.isLoggedIn()) {
 <mat-toolbar color="primary">
   @if (isMobile()) {
     <button mat-icon-button (click)="toggleSidenav()">
@@ -64,3 +65,6 @@
     <router-outlet />
   </mat-sidenav-content>
 </mat-sidenav-container>
+} @else {
+  <router-outlet />
+}

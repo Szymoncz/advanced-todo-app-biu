@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TaskService } from './core/services/task.service';
 import { Task } from './core/models/task.model';
+import { Auth } from './core/services/auth';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { Task } from './core/models/task.model';
   styleUrl: './app.scss'
 })
 export class App {
+  authService = inject(Auth);
   protected readonly title = signal('advanced-todo-app');
 
   private breakpointObserver = inject(BreakpointObserver);
